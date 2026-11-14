@@ -2,7 +2,7 @@
 bin/
 obj/
 *.rar
-New Text Document.txt
+.github/
 
 # Runtime data & logs
 migration_journal.tsv

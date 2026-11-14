@@ -1,6 +1,12 @@
 # IMAP to IMAP Email Migration Tool (Portable Windows .exe)
 
+[![GitHub](https://img.shields.io/badge/GitHub-Qorege%2FBulk--IMAP--Migration-blue?logo=github)](https://github.com/Qorege/Bulk-IMAP-Migration)
+[![Platform](https://img.shields.io/badge/Platform-Windows%207%20%7C%208%20%7C%2010%20%7C%2011-0078D6?logo=windows)](https://github.com/Qorege/Bulk-IMAP-Migration)
+[![.NET](https://img.shields.io/badge/.NET%20Framework-4.0%20--%204.8-512BD4)](https://github.com/Qorege/Bulk-IMAP-Migration)
+
 A high-performance, resilient, modern, and portable Windows desktop application (`IMAPMigrator.exe`) designed for migrating single or multiple IMAP email accounts with direct IMAP-to-IMAP streaming, true deduplication, size filtering, and zero local disk bloating.
+
+**Repository URL**: [https://github.com/Qorege/Bulk-IMAP-Migration](https://github.com/Qorege/Bulk-IMAP-Migration)
 
 ---
 

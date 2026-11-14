@@ -198,15 +198,12 @@ namespace ImapSyncWin
             // Help Menu
             var mnuHelp = new ToolStripMenuItem("Help");
             mnuHelp.DropDownItems.Add("Key Architecture & Safety Features", null, (s, e) => ShowKeyFeaturesDialog());
-            mnuHelp.DropDownItems.Add("About", null, (s, e) => MessageBox.Show(
-                "IMAP to IMAP Email Migration Tool\n\n" +
-                "• Direct IMAP-to-IMAP in-memory streaming\n" +
-                "• Source mailbox is strictly READ-ONLY (EXAMINE mode)\n" +
-                "• True Deduplication with UID & Message-ID tracking\n" +
-                "• Auto-Retry with backoff (10+ retries)\n" +
-                "• Batch Queue & CSV support\n\n" +
-                "Portable Windows Executable (.NET 4.0 - 4.8)",
-                "About IMAP Migration Tool", MessageBoxButtons.OK, MessageBoxIcon.Information));
+            mnuHelp.DropDownItems.Add("GitHub Repository...", null, (s, e) =>
+            {
+                try { System.Diagnostics.Process.Start("https://github.com/Qorege/Bulk-IMAP-Migration"); } catch { }
+            });
+            mnuHelp.DropDownItems.Add(new ToolStripSeparator());
+            mnuHelp.DropDownItems.Add("About", null, (s, e) => ShowAboutDialog());
             menu.Items.Add(mnuHelp);
 
             MainMenuStrip = menu;
@@ -2141,6 +2138,94 @@ namespace ImapSyncWin
             catch (Exception ex)
             {
                 MessageBox.Show("Cannot open log: " + ex.Message, "Log", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        private void ShowAboutDialog()
+        {
+            using (var dlg = new Form())
+            {
+                dlg.Text = "About IMAP Migration Tool";
+                dlg.Size = new Size(520, 380);
+                dlg.StartPosition = FormStartPosition.CenterParent;
+                dlg.FormBorderStyle = FormBorderStyle.FixedDialog;
+                dlg.MaximizeBox = false;
+                dlg.MinimizeBox = false;
+                dlg.BackColor = Color.White;
+                dlg.Icon = this.Icon;
+
+                var pbLogo = new PictureBox
+                {
+                    Location = new Point(20, 20),
+                    Size = new Size(48, 48),
+                    SizeMode = PictureBoxSizeMode.Zoom,
+                    Image = _pbLogo != null ? _pbLogo.Image : (this.Icon != null ? this.Icon.ToBitmap() : null)
+                };
+                dlg.Controls.Add(pbLogo);
+
+                var lblTitle = new Label
+                {
+                    Text = "IMAP to IMAP Email Migration Tool",
+                    Font = new Font("Segoe UI", 12f, FontStyle.Bold),
+                    ForeColor = Color.FromArgb(15, 23, 42),
+                    Location = new Point(80, 18),
+                    AutoSize = true
+                };
+                dlg.Controls.Add(lblTitle);
+
+                var lblDesc = new Label
+                {
+                    Text = "Direct IMAP-to-IMAP email migration engine.\n\n" +
+                           "• Direct in-memory streaming with zero local disk bloat\n" +
+                           "• Source mailbox is strictly READ-ONLY (EXAMINE mode)\n" +
+                           "• True Deduplication with UID & Message-ID tracking\n" +
+                           "• Auto-Retry with backoff (10+ retries)\n" +
+                           "• Batch queue & CSV support with auto-defaulting\n" +
+                           "• Portable Windows executable (.NET 4.0 - 4.8 compatible)",
+                    Font = new Font("Segoe UI", 8.75f),
+                    ForeColor = Color.FromArgb(51, 65, 85),
+                    Location = new Point(80, 50),
+                    Size = new Size(400, 155)
+                };
+                dlg.Controls.Add(lblDesc);
+
+                var lblRepoHeading = new Label
+                {
+                    Text = "GitHub Repository:",
+                    Font = new Font("Segoe UI", 8.75f, FontStyle.Bold),
+                    ForeColor = Color.FromArgb(15, 23, 42),
+                    Location = new Point(80, 222),
+                    AutoSize = true
+                };
+                dlg.Controls.Add(lblRepoHeading);
+
+                var lnkRepo = new LinkLabel
+                {
+                    Text = "https://github.com/Qorege/Bulk-IMAP-Migration",
+                    Font = new Font("Segoe UI", 8.75f),
+                    Location = new Point(80, 244),
+                    AutoSize = true,
+                    LinkColor = Color.FromArgb(2, 132, 199),
+                    ActiveLinkColor = Color.FromArgb(3, 115, 175)
+                };
+                lnkRepo.LinkClicked += (s, e) =>
+                {
+                    try { System.Diagnostics.Process.Start("https://github.com/Qorege/Bulk-IMAP-Migration"); } catch { }
+                };
+                dlg.Controls.Add(lnkRepo);
+
+                var btnOk = new ModernButton
+                {
+                    Text = "OK",
+                    StyleMode = ButtonStyleMode.Primary,
+                    Location = new Point(dlg.ClientSize.Width - 110, dlg.ClientSize.Height - 48),
+                    Size = new Size(90, 32),
+                    Anchor = AnchorStyles.Bottom | AnchorStyles.Right
+                };
+                btnOk.Click += (s, e) => dlg.Close();
+                dlg.Controls.Add(btnOk);
+
+                dlg.ShowDialog(this);
             }
         }
 
