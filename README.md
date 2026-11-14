@@ -1,4 +1,4 @@
-# IMAP to IMAP Email Migration Tool (Portable Windows .exe)
+# IMAP to IMAP Email Migration Tool (Portable Windows App)
 
 [![GitHub](https://img.shields.io/badge/GitHub-Qorege%2FBulk--IMAP--Migration-blue?logo=github)](https://github.com/Qorege/Bulk-IMAP-Migration)
 [![Platform](https://img.shields.io/badge/Platform-Windows%207%20%7C%208%20%7C%2010%20%7C%2011-0078D6?logo=windows)](https://github.com/Qorege/Bulk-IMAP-Migration)
