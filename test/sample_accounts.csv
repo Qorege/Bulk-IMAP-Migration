@@ -1,0 +1,5 @@
+SourceHost,SourcePort,SourceSSL,SourceUser,SourcePassword,DestHost,DestPort,DestSSL,DestUser,DestPassword
+imap.yandex.com,993,SslTls,operation@adventexhibition.com,16a-+83R,chocobo.mxrouting.net,993,SslTls,operation@adventexhibition.com,12D-Le64-tf
+imap.yandex.com,993,SslTls,mohamed.gamal@adventexhibition.com,34m-+51R,chocobo.mxrouting.net,993,SslTls,mohamed.gamal@adventexhibition.com,12D-Le64-et
+imap.yandex.com,993,SslTls,ahmed.mostafa@adventexhibition.com,62m-+51F,chocobo.mxrouting.net,993,SslTls,ahmed.mostafa@adventexhibition.com,51-gh-Ae-en
+imap.yandex.com,994,SslTls,career@adventexhibition.com,13m-+5T1,,,,career@adventexhibition.com,18eL-21-nf

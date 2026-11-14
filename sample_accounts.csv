@@ -1,0 +1,4 @@
+SourceHost,SourcePort,SourceSSL,SourceUser,SourcePassword,DestHost,DestPort,DestSSL,DestUser,DestPassword,Folders
+mail.old-company.com,993,SslTls,john@old-company.com,OldPassword123!,mail.new-company.com,993,SslTls,john@new-company.com,NewPassword123!,INBOX;Sent;Drafts;Archive
+mail.old-company.com,993,SslTls,sarah@old-company.com,SarahOldPass456!,mail.new-company.com,993,SslTls,sarah@new-company.com,SarahNewPass456!,INBOX;Sent;Customers
+imap.gmail.com,993,SslTls,alex@gmail.com,abcd efgh ijkl mnop,outlook.office365.com,993,SslTls,alex@corporate.com,CorpPass789!,INBOX

@@ -1,0 +1,15 @@
+# Build & Output
+bin/
+obj/
+*.rar
+New Text Document.txt
+
+# Runtime data & logs
+migration_journal.tsv
+*.log
+settings.ini
+
+# OS generated
+Thumbs.db
+[Ee]xcludes
+.DS_Store
