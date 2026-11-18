@@ -1,0 +1,260 @@
+<UserControl x:Class="IMAPMigrator.WPF.Views.QueueView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:converters="clr-namespace:IMAPMigrator.WPF.Converters"
+             xmlns:ImapSyncWin="clr-namespace:ImapSyncWin"
+             mc:Ignorable="d" 
+             d:DesignHeight="700" d:DesignWidth="1050"
+             Background="#F8FAFC">
+
+    <UserControl.Resources>
+        <converters:StatusColorConverter x:Key="StatusColorConverter"/>
+    </UserControl.Resources>
+
+    <Grid Margin="16,12,16,14">
+        <Grid.RowDefinitions>
+            <!-- Top Action Toolbar Card -->
+            <RowDefinition Height="Auto"/>
+            <!-- Queue DataGrid Card -->
+            <RowDefinition Height="*"/>
+            <!-- Bottom Status Footer Card -->
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- TOOLBAR CARD -->
+        <materialDesign:Card Grid.Row="0" UniformCornerRadius="10" Padding="14,10" Background="White" Margin="0,0,0,12">
+            <DockPanel LastChildFill="False">
+                <!-- Left Buttons -->
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" DockPanel.Dock="Left">
+                    <Button Command="{Binding ImportCsvCommand}" Style="{StaticResource MaterialDesignRaisedButton}"
+                            Height="34" Padding="12,0" Background="#0284c7" BorderBrush="#0284c7" Margin="0,0,8,0">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="FileUploadOutline" Width="16" Height="16" Margin="0,0,6,0" VerticalAlignment="Center"/>
+                            <TextBlock Text="Import CSV" FontSize="12" Foreground="White" FontWeight="SemiBold"/>
+                        </StackPanel>
+                    </Button>
+
+                    <Button Command="{Binding ExportCsvTemplateCommand}" Style="{StaticResource MaterialDesignOutlinedButton}"
+                            Height="34" Padding="12,0" Margin="0,0,14,0">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="FileDownloadOutline" Width="16" Height="16" Margin="0,0,6,0" VerticalAlignment="Center"/>
+                            <TextBlock Text="CSV Template" FontSize="12"/>
+                        </StackPanel>
+                    </Button>
+
+                    <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Margin="0,2,14,2"/>
+
+                    <TextBlock Text="Concurrency:" FontSize="12" FontWeight="SemiBold" Foreground="#475569" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                    <ComboBox SelectedItem="{Binding Concurrency}" Style="{StaticResource MaterialDesignOutlinedComboBox}"
+                              Height="34" Width="130" FontSize="12" Margin="0,0,14,0">
+                        <ComboBox.Items>
+                            <x:Static Member="ImapSyncWin:QueueConcurrencyOption.OneAtATime"/>
+                            <x:Static Member="ImapSyncWin:QueueConcurrencyOption.ThreeAtATime"/>
+                            <x:Static Member="ImapSyncWin:QueueConcurrencyOption.SyncAll"/>
+                        </ComboBox.Items>
+                    </ComboBox>
+
+                    <Button Command="{Binding EditAccountCommand}" Style="{StaticResource MaterialDesignOutlinedButton}"
+                            Height="34" Padding="10,0" Margin="0,0,6,0" ToolTip="Edit selected account configuration and folder mappings">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="PencilOutline" Width="15" Height="15" Margin="0,0,4,0" VerticalAlignment="Center"/>
+                            <TextBlock Text="Edit" FontSize="12"/>
+                        </StackPanel>
+                    </Button>
+
+                    <Button Command="{Binding RemoveAccountCommand}" Style="{StaticResource MaterialDesignOutlinedButton}"
+                            Height="34" Padding="10,0" Margin="0,0,6,0" Foreground="#ef4444" BorderBrush="#fca5a5" ToolTip="Remove selected account from queue">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="TrashCanOutline" Width="15" Height="15" Margin="0,0,4,0" VerticalAlignment="Center" Foreground="#ef4444"/>
+                            <TextBlock Text="Remove" FontSize="12"/>
+                        </StackPanel>
+                    </Button>
+
+                    <Button Command="{Binding ClearFinishedCommand}" Style="{StaticResource MaterialDesignToolButton}"
+                            Height="34" Padding="8,0" Margin="0,0,4,0" ToolTip="Clear completed accounts">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="CheckAll" Width="16" Height="16" Margin="0,0,4,0" VerticalAlignment="Center" Foreground="#64748b"/>
+                            <TextBlock Text="Clear Finished" FontSize="12" Foreground="#64748b"/>
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+
+                <!-- Right Execution Buttons -->
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" DockPanel.Dock="Right">
+                    <Button Command="{Binding StartQueueCommand}" Style="{StaticResource MaterialDesignRaisedButton}"
+                            Height="36" Padding="16,0" Background="#16a34a" BorderBrush="#16a34a" Margin="0,0,8,0">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="Play" Width="16" Height="16" Margin="0,0,6,0" VerticalAlignment="Center" Foreground="White"/>
+                            <TextBlock Text="Start Queue" FontSize="12" FontWeight="Bold" Foreground="White"/>
+                        </StackPanel>
+                    </Button>
+
+                    <Button Command="{Binding PauseQueueCommand}" Style="{StaticResource MaterialDesignOutlinedButton}"
+                            Height="36" Padding="14,0" Margin="0,0,8,0">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="Pause" Width="16" Height="16" Margin="0,0,4,0" VerticalAlignment="Center"/>
+                            <TextBlock Text="Pause" FontSize="12"/>
+                        </StackPanel>
+                    </Button>
+
+                    <Button Command="{Binding StopQueueCommand}" Style="{StaticResource MaterialDesignRaisedButton}"
+                            Height="36" Padding="14,0" Background="#ef4444" BorderBrush="#ef4444">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="Stop" Width="16" Height="16" Margin="0,0,4,0" VerticalAlignment="Center" Foreground="White"/>
+                            <TextBlock Text="Stop" FontSize="12" FontWeight="Bold" Foreground="White"/>
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+            </DockPanel>
+        </materialDesign:Card>
+
+        <!-- QUEUE DATAGRID CARD -->
+        <materialDesign:Card Grid.Row="1" UniformCornerRadius="10" Padding="0" Background="White" Margin="0,0,0,10">
+            <DataGrid ItemsSource="{Binding Queue}" SelectedItem="{Binding SelectedAccount}"
+                      AutoGenerateColumns="False" CanUserAddRows="False"
+                      CanUserResizeRows="False" SelectionMode="Single"
+                      GridLinesVisibility="Horizontal" HorizontalGridLinesBrush="#E2E8F0"
+                      HeadersVisibility="Column" BorderThickness="0" Background="White"
+                      FontSize="12" RowHeight="38">
+                <DataGrid.Resources>
+                    <Style TargetType="DataGridColumnHeader">
+                        <Setter Property="Background" Value="#F1F5F9"/>
+                        <Setter Property="Foreground" Value="#475569"/>
+                        <Setter Property="FontWeight" Value="SemiBold"/>
+                        <Setter Property="Padding" Value="12,8"/>
+                        <Setter Property="BorderThickness" Value="0,0,0,1"/>
+                        <Setter Property="BorderBrush" Value="#E2E8F0"/>
+                    </Style>
+                    <Style TargetType="DataGridCell">
+                        <Setter Property="Padding" Value="10,0"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="DataGridCell">
+                                    <Border Padding="{TemplateBinding Padding}" Background="{TemplateBinding Background}">
+                                        <ContentPresenter VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </DataGrid.Resources>
+
+                <DataGrid.Columns>
+                    <!-- Status Badge Column -->
+                    <DataGridTemplateColumn Header="STATUS" Width="120">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Border CornerRadius="10" Padding="8,3" HorizontalAlignment="Left"
+                                        Background="{Binding Status, Converter={StaticResource StatusColorConverter}, ConverterParameter=Background}">
+                                    <TextBlock Text="{Binding Status}" Foreground="White" FontSize="11" FontWeight="Bold"/>
+                                </Border>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                    <!-- Source Mailbox -->
+                    <DataGridTemplateColumn Header="SOURCE MAILBOX" Width="2*">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+                                    <TextBlock Text="{Binding SourceUser}" FontWeight="SemiBold" Foreground="#1e293b"/>
+                                    <TextBlock Text="{Binding SourceHost}" FontSize="11" Foreground="#64748b"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                    <!-- Destination Mailbox -->
+                    <DataGridTemplateColumn Header="DESTINATION MAILBOX" Width="2*">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+                                    <TextBlock Text="{Binding DestUser}" FontWeight="SemiBold" Foreground="#1e293b"/>
+                                    <TextBlock Text="{Binding DestHost}" FontSize="11" Foreground="#64748b"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                    <!-- Folders Count -->
+                    <DataGridTemplateColumn Header="FOLDERS" Width="80">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding FolderMappings.Count}" HorizontalAlignment="Center" Foreground="#475569" FontWeight="SemiBold"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                    <!-- Progress -->
+                    <DataGridTemplateColumn Header="PROCESSED" Width="110">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock HorizontalAlignment="Center" Foreground="#475569">
+                                    <Run Text="{Binding ProcessedMessages, Mode=OneWay}"/>
+                                    <Run Text=" / " Foreground="#94a3b8"/>
+                                    <Run Text="{Binding TotalMessages, Mode=OneWay}"/>
+                                </TextBlock>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                    <!-- Moved -->
+                    <DataGridTemplateColumn Header="MOVED" Width="80">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding MovedMessages}" HorizontalAlignment="Center" Foreground="#16a34a" FontWeight="SemiBold"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                    <!-- Skipped -->
+                    <DataGridTemplateColumn Header="SKIPPED" Width="80">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding SkippedMessages}" HorizontalAlignment="Center" Foreground="#0284c7" FontWeight="SemiBold"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                    <!-- Errors -->
+                    <DataGridTemplateColumn Header="ERRORS" Width="80">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding ErrorMessages}" HorizontalAlignment="Center" Foreground="#ef4444" FontWeight="SemiBold"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                    <!-- Message / Detail -->
+                    <DataGridTemplateColumn Header="DETAILS" Width="2*">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding StatusMessage}" Foreground="#64748b" TextTrimming="CharacterEllipsis" ToolTip="{Binding StatusMessage}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+        </materialDesign:Card>
+
+        <!-- FOOTER INFO CARD -->
+        <materialDesign:Card Grid.Row="2" UniformCornerRadius="10" Padding="14,10" Background="White">
+            <DockPanel LastChildFill="False">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" DockPanel.Dock="Left">
+                    <materialDesign:PackIcon Kind="InformationOutline" Width="16" Height="16" Foreground="#0284c7" Margin="0,0,6,0" VerticalAlignment="Center"/>
+                    <TextBlock Text="Total Accounts in Queue: " FontSize="12" Foreground="#64748b"/>
+                    <TextBlock Text="{Binding Queue.Count}" FontSize="12" FontWeight="Bold" Foreground="#1e293b"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" DockPanel.Dock="Right">
+                    <materialDesign:PackIcon Kind="ShieldCheckOutline" Width="15" Height="15" Foreground="#16a34a" Margin="0,0,4,0" VerticalAlignment="Center"/>
+                    <TextBlock Text="Zero-Downtime Safe · Direct Streaming (No Local Disk Storage)" FontSize="11" Foreground="#64748b"/>
+                </StackPanel>
+            </DockPanel>
+        </materialDesign:Card>
+    </Grid>
+</UserControl>

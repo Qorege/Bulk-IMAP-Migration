@@ -1,0 +1,251 @@
+﻿<mah:MetroWindow x:Class="IMAPMigrator.WPF.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:views="clr-namespace:IMAPMigrator.WPF.Views"
+        xmlns:ImapSyncWin="clr-namespace:ImapSyncWin"
+        mc:Ignorable="d"
+        Title="Bulk IMAP Migration Suite" Height="780" Width="1180" MinHeight="680" MinWidth="980"
+        WindowStartupLocation="CenterScreen"
+        GlowBrush="{DynamicResource MahApps.Brushes.Accent}"
+        Background="#F1F5F9">
+
+    <!-- MAHAPPS FLYOUTS (Right Side Settings Drawer) -->
+    <mah:MetroWindow.Flyouts>
+        <mah:FlyoutsControl>
+            <mah:Flyout Header="Application Settings" Position="Right" Width="440"
+                        IsOpen="{Binding IsSettingsOpen}" Theme="Light"
+                        DataContext="{Binding SettingsVM}">
+                <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="14,10,14,14">
+                    <StackPanel>
+                        <!-- DEFAULT CONNECTIONS CARD -->
+                        <materialDesign:Card UniformCornerRadius="10" Padding="16,14" Background="White" Margin="0,0,0,12">
+                            <StackPanel>
+                                <TextBlock Text="DEFAULT HOSTS &amp; PORTS" FontSize="11" FontWeight="Bold" Foreground="#0284c7" Margin="0,0,0,10"/>
+
+                                <TextBlock Text="Default Source Host" FontSize="10" FontWeight="Bold" Foreground="#64748b" Margin="0,0,0,2"/>
+                                <TextBox Text="{Binding SrcHost, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource MaterialDesignOutlinedTextBox}" Height="34" FontSize="12" Margin="0,0,0,8"/>
+
+                                <Grid Margin="0,0,0,10">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="10"/>
+                                        <ColumnDefinition Width="1.5*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Grid.Column="0">
+                                        <TextBlock Text="Source Port" FontSize="10" FontWeight="Bold" Foreground="#64748b" Margin="0,0,0,2"/>
+                                        <TextBox Text="{Binding SrcPort, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource MaterialDesignOutlinedTextBox}" Height="34" FontSize="12"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="2">
+                                        <TextBlock Text="Source Security" FontSize="10" FontWeight="Bold" Foreground="#64748b" Margin="0,0,0,2"/>
+                                        <ComboBox SelectedItem="{Binding SrcSecurity}" Style="{StaticResource MaterialDesignOutlinedComboBox}" Height="34" FontSize="12">
+                                            <ComboBox.Items>
+                                                <x:Static Member="ImapSyncWin:SecurityType.SslTls"/>
+                                                <x:Static Member="ImapSyncWin:SecurityType.StartTls"/>
+                                                <x:Static Member="ImapSyncWin:SecurityType.Plain"/>
+                                            </ComboBox.Items>
+                                        </ComboBox>
+                                    </StackPanel>
+                                </Grid>
+
+                                <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Margin="0,4,0,10"/>
+
+                                <TextBlock Text="Default Destination Host" FontSize="10" FontWeight="Bold" Foreground="#64748b" Margin="0,0,0,2"/>
+                                <TextBox Text="{Binding DestHost, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource MaterialDesignOutlinedTextBox}" Height="34" FontSize="12" Margin="0,0,0,8"/>
+
+                                <Grid Margin="0,0,0,4">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="10"/>
+                                        <ColumnDefinition Width="1.5*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Grid.Column="0">
+                                        <TextBlock Text="Dest Port" FontSize="10" FontWeight="Bold" Foreground="#64748b" Margin="0,0,0,2"/>
+                                        <TextBox Text="{Binding DestPort, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource MaterialDesignOutlinedTextBox}" Height="34" FontSize="12"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="2">
+                                        <TextBlock Text="Dest Security" FontSize="10" FontWeight="Bold" Foreground="#64748b" Margin="0,0,0,2"/>
+                                        <ComboBox SelectedItem="{Binding DestSecurity}" Style="{StaticResource MaterialDesignOutlinedComboBox}" Height="34" FontSize="12">
+                                            <ComboBox.Items>
+                                                <x:Static Member="ImapSyncWin:SecurityType.SslTls"/>
+                                                <x:Static Member="ImapSyncWin:SecurityType.StartTls"/>
+                                                <x:Static Member="ImapSyncWin:SecurityType.Plain"/>
+                                            </ComboBox.Items>
+                                        </ComboBox>
+                                    </StackPanel>
+                                </Grid>
+                            </StackPanel>
+                        </materialDesign:Card>
+
+                        <!-- RETRIES & RESILIENCY CARD -->
+                        <materialDesign:Card UniformCornerRadius="10" Padding="16,14" Background="White" Margin="0,0,0,12">
+                            <StackPanel>
+                                <TextBlock Text="NETWORK RESILIENCY &amp; PERFORMANCE" FontSize="11" FontWeight="Bold" Foreground="#0284c7" Margin="0,0,0,10"/>
+
+                                <Grid Margin="0,0,0,8">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="8"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="8"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <StackPanel Grid.Column="0">
+                                        <TextBlock Text="Retries" FontSize="10" FontWeight="Bold" Foreground="#64748b" Margin="0,0,0,2"/>
+                                        <TextBox Text="{Binding AutoRetries, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource MaterialDesignOutlinedTextBox}" Height="34" FontSize="12"/>
+                                    </StackPanel>
+
+                                    <StackPanel Grid.Column="2">
+                                        <TextBlock Text="Delay (sec)" FontSize="10" FontWeight="Bold" Foreground="#64748b" Margin="0,0,0,2"/>
+                                        <TextBox Text="{Binding RetryDelaySeconds, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource MaterialDesignOutlinedTextBox}" Height="34" FontSize="12"/>
+                                    </StackPanel>
+
+                                    <StackPanel Grid.Column="4">
+                                        <TextBlock Text="Timeout (s)" FontSize="10" FontWeight="Bold" Foreground="#64748b" Margin="0,0,0,2"/>
+                                        <TextBox Text="{Binding TimeoutSeconds, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource MaterialDesignOutlinedTextBox}" Height="34" FontSize="12"/>
+                                    </StackPanel>
+                                </Grid>
+
+                                <CheckBox IsChecked="{Binding DirectStreaming}" Content="Direct Streaming Transfer (No temp disk storage)"
+                                          Margin="0,4,0,4" FontSize="11" FontWeight="SemiBold"/>
+
+                                <CheckBox IsChecked="{Binding Deduplicate}" Content="True Message-ID Deduplication (Skip already copied)"
+                                          Margin="0,0,0,4" FontSize="11" FontWeight="SemiBold"/>
+
+                                <CheckBox IsChecked="{Binding SkipLargerThan}" Content="Skip emails larger than threshold"
+                                          Margin="0,0,0,4" FontSize="11"/>
+
+                                <StackPanel Orientation="Horizontal" Visibility="{Binding SkipLargerThan, Converter={StaticResource BooleanToVisibilityConverter}}" Margin="24,2,0,4">
+                                    <TextBlock Text="Max Email Size:" FontSize="11" Foreground="#64748b" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                                    <TextBox Text="{Binding MaxEmailSizeMb, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource MaterialDesignOutlinedTextBox}" Width="60" Height="28" FontSize="11"/>
+                                    <TextBlock Text=" MB" FontSize="11" Foreground="#64748b" VerticalAlignment="Center" Margin="4,0,0,0"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </materialDesign:Card>
+
+                        <!-- JOURNAL & CACHE CARD -->
+                        <materialDesign:Card UniformCornerRadius="10" Padding="16,14" Background="White" Margin="0,0,0,14">
+                            <StackPanel>
+                                <TextBlock Text="MIGRATION JOURNAL CACHE" FontSize="11" FontWeight="Bold" Foreground="#0284c7" Margin="0,0,0,6"/>
+                                <TextBlock Text="A local persistent journal keeps track of copied Message-IDs to prevent re-copying duplicates across sessions."
+                                           FontSize="11" Foreground="#64748b" TextWrapping="Wrap" Margin="0,0,0,10"/>
+
+                                <Button Command="{Binding ClearDeduplicationCacheCommand}" Style="{StaticResource MaterialDesignOutlinedButton}"
+                                        Height="32" Foreground="#ef4444" BorderBrush="#fca5a5" HorizontalAlignment="Left">
+                                    <StackPanel Orientation="Horizontal">
+                                        <materialDesign:PackIcon Kind="TrashCanOutline" Width="14" Height="14" Margin="0,0,4,0" VerticalAlignment="Center" Foreground="#ef4444"/>
+                                        <TextBlock Text="Clear Journal Cache" FontSize="11"/>
+                                    </StackPanel>
+                                </Button>
+                            </StackPanel>
+                        </materialDesign:Card>
+
+                        <!-- SAVE BUTTON -->
+                        <Button Command="{Binding SaveCommand}" Style="{StaticResource MaterialDesignRaisedButton}"
+                                Height="38" Background="#0284c7" BorderBrush="#0284c7">
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="ContentSaveOutline" Width="16" Height="16" Margin="0,0,6,0" VerticalAlignment="Center" Foreground="White"/>
+                                <TextBlock Text="Save Settings" FontSize="12" FontWeight="Bold" Foreground="White"/>
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
+                </ScrollViewer>
+            </mah:Flyout>
+        </mah:FlyoutsControl>
+    </mah:MetroWindow.Flyouts>
+
+    <!-- MAIN ROOT GRID -->
+    <Grid>
+        <Grid.RowDefinitions>
+            <!-- Header Bar -->
+            <RowDefinition Height="Auto"/>
+            <!-- Main Content Tabs -->
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- APP HEADER BAR -->
+        <Border Grid.Row="0" Background="White" BorderThickness="0,0,0,1" BorderBrush="#E2E8F0" Padding="16,10">
+            <DockPanel LastChildFill="False">
+                <!-- Left Title & Badges -->
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" DockPanel.Dock="Left">
+                    <!-- Icon -->
+                    <Border CornerRadius="8" Background="#0284c7" Width="36" Height="36" Margin="0,0,12,0">
+                        <materialDesign:PackIcon Kind="EmailSyncOutline" Width="22" Height="22" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+
+                    <!-- Titles -->
+                    <StackPanel VerticalAlignment="Center">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding AppTitle}" FontSize="15" FontWeight="Bold" Foreground="#0f172a" Margin="0,0,10,0"/>
+                            <!-- Badges -->
+                            <Border CornerRadius="10" Background="#FEF2F2" Padding="8,2" Margin="0,0,6,0" VerticalAlignment="Center">
+                                <TextBlock Text="Source Read-Only" FontSize="10" FontWeight="Bold" Foreground="#b91c1c"/>
+                            </Border>
+                            <Border CornerRadius="10" Background="#F0FDF4" Padding="8,2" VerticalAlignment="Center">
+                                <TextBlock Text="Direct Streaming" FontSize="10" FontWeight="Bold" Foreground="#15803d"/>
+                            </Border>
+                        </StackPanel>
+                        <TextBlock Text="{Binding AppSubtitle}" FontSize="11" Foreground="#64748b" Margin="0,2,0,0"/>
+                    </StackPanel>
+                </StackPanel>
+
+                <!-- Right Header Actions -->
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" DockPanel.Dock="Right">
+                    <!-- Demo Test -->
+                    <Button Command="{Binding RunDemoTestCommand}" Style="{StaticResource MaterialDesignOutlinedButton}"
+                            Height="32" Padding="10,0" Margin="0,0,8,0" ToolTip="Start local in-memory source and dest test servers">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="TestTube" Width="14" Height="14" Margin="0,0,4,0" VerticalAlignment="Center" Foreground="#0284c7"/>
+                            <TextBlock Text="Demo Test" FontSize="11"/>
+                        </StackPanel>
+                    </Button>
+
+                    <!-- GitHub Button -->
+                    <Button Command="{Binding OpenGitHubCommand}" Style="{StaticResource MaterialDesignToolButton}"
+                            Height="32" Width="32" Padding="0" Margin="0,0,4,0" ToolTip="View on GitHub">
+                        <materialDesign:PackIcon Kind="Github" Width="18" Height="18" Foreground="#334155"/>
+                    </Button>
+
+                    <!-- About Button -->
+                    <Button Command="{Binding ShowAboutCommand}" Style="{StaticResource MaterialDesignToolButton}"
+                            Height="32" Width="32" Padding="0" Margin="0,0,4,0" ToolTip="About application">
+                        <materialDesign:PackIcon Kind="InformationOutline" Width="18" Height="18" Foreground="#334155"/>
+                    </Button>
+
+                    <!-- Settings Flyout Toggle Button -->
+                    <Button Command="{Binding ToggleSettingsCommand}" Style="{StaticResource MaterialDesignRaisedButton}"
+                            Height="32" Padding="12,0" Background="#0284c7" BorderBrush="#0284c7" ToolTip="Open Settings">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="CogOutline" Width="15" Height="15" Margin="0,0,4,0" VerticalAlignment="Center" Foreground="White"/>
+                            <TextBlock Text="Settings" FontSize="11" FontWeight="SemiBold" Foreground="White"/>
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+            </DockPanel>
+        </Border>
+
+        <!-- MAIN TABS (MahApps MetroAnimatedTabControl) -->
+        <mah:MetroAnimatedTabControl Grid.Row="1" SelectedIndex="{Binding SelectedTabIndex}"
+                                     mah:TabControlHelper.Underlined="SelectedTabItem"
+                                     Background="#F8FAFC">
+            <!-- TAB 1: Single Migration -->
+            <TabItem Header="Single Mailbox Migration">
+                <views:SingleMigrationView DataContext="{Binding SingleVM}"/>
+            </TabItem>
+
+            <!-- TAB 2: Bulk Queue -->
+            <TabItem Header="Bulk Migration Queue">
+                <views:QueueView DataContext="{Binding QueueVM}"/>
+            </TabItem>
+
+            <!-- TAB 3: Migration Monitor -->
+            <TabItem Header="Migration Monitor">
+                <views:MonitorView DataContext="{Binding MonitorVM}"/>
+            </TabItem>
+        </mah:MetroAnimatedTabControl>
+    </Grid>
+</mah:MetroWindow>

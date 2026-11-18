@@ -1,0 +1,40 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+    <ApplicationIcon>..\app.ico</ApplicationIcon>
+    <RootNamespace>IMAPMigrator.WPF</RootNamespace>
+    <AssemblyName>IMAPMigrator.WPF</AssemblyName>
+    <NoWarn>$(NoWarn);NU1701;CS8600;CS8602;CS8603;CS8604;CS8625;CS8632;SYSLIB0039</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
+    <PackageReference Include="MahApps.Metro" Version="2.4.10" />
+    <PackageReference Include="MaterialDesignThemes" Version="5.2.1" />
+    <PackageReference Include="MaterialDesignThemes.MahApps" Version="5.2.1" />
+    <PackageReference Include="LiveChartsCore.SkiaSharpView.WPF" Version="2.0.5" />
+    <PackageReference Include="Wpf.Ui" Version="3.4.2.7" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\src\ImapClient.cs" Link="Core\ImapClient.cs" />
+    <Compile Include="..\src\ImapStream.cs" Link="Core\ImapStream.cs" />
+    <Compile Include="..\src\ImapModels.cs" Link="Core\ImapModels.cs" />
+    <Compile Include="..\src\MigrationEngine.cs" Link="Core\MigrationEngine.cs" />
+    <Compile Include="..\src\MigrationJournal.cs" Link="Core\MigrationJournal.cs" />
+    <Compile Include="..\src\CsvHandler.cs" Link="Core\CsvHandler.cs" />
+    <Compile Include="..\src\Settings.cs" Link="Core\Settings.cs" />
+    <Compile Include="..\src\MockImapServer.cs" Link="Core\MockImapServer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="..\app.ico" Link="Assets\app.ico" />
+    <Resource Include="..\icon.png" Link="Assets\icon.png" />
+  </ItemGroup>
+
+</Project>

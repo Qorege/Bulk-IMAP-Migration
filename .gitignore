@@ -1,6 +1,9 @@
 # Build & Output
 bin/
 obj/
+bin_wpf/
+**/bin/
+**/obj/
 *.rar
 .github/
 

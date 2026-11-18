@@ -69,12 +69,41 @@ A high-performance, resilient, modern, and portable Windows desktop application 
 
 ---
 
-## 📁 File Structure
+## 📁 Editions & File Structure
+
+This repository provides **two distinct editions** powered by the same shared core engine:
+
+### 1. Modern WPF MVVM Edition (`IMAPMigrator.WPF/`)
+- **Target Runtime**: .NET 8 (Windows)
+- **Architecture**: Strict MVVM pattern with `CommunityToolkit.Mvvm`
+- **UI & Controls**: `MahApps.Metro`, `MaterialDesignThemes` (Material Design in XAML), and `WPF UI` (`Wpf.Ui`)
+- **Charts & Telemetry**: `LiveCharts2` (`LiveChartsCore.SkiaSharpView.WPF`) with interactive Donut status breakdowns and smooth real-time Throughput line charts (Emails/sec)
+- **Features**: Responsive layout, MahApps animated tabs, right-docked settings drawer Flyout, modal account editor, 1:1 side-by-side card views, dark developer terminal activity log.
+- **Build / Run**: Double-click `build_wpf.bat` or run:
+  ```powershell
+  dotnet publish IMAPMigrator.WPF/IMAPMigrator.WPF.csproj -c Release -o bin_wpf
+  ```
+
+### 2. Standalone Portable WinForms Edition (`IMAPMigrator.exe`)
+- **Target Runtime**: .NET Framework 4.0 - 4.8 (Runs out of the box on Windows 7, 8, 10, 11 with zero installations)
+- **Binary**: Single standalone file `IMAPMigrator.exe`
+- **Build / Run**: Double-click `build.bat`
+
+---
+
+## 📁 Source Tree
 
 - **`IMAPMigrator.exe`**: Standalone, portable executable with embedded icon (`app.ico`).
+- **`build_wpf.bat`**: One-click build and publish script for the WPF MVVM edition.
+- **`build.bat`**: One-click build script for the standalone portable edition.
 - **`sample_accounts.csv`**: Sample CSV template ready for bulk account import.
 - **`settings.ini`**: Configuration file storing default servers, folders, concurrency, and size filters.
-- **`src/`**: Complete C# source code (.NET Framework 4.0 - 4.8 compatible):
+- **`IMAPMigrator.WPF/`**: Complete WPF MVVM source project:
+  - `ViewModels/`: `MainViewModel`, `SingleMigrationViewModel`, `QueueViewModel`, `MonitorViewModel`, `SettingsViewModel`, `AccountEditViewModel`.
+  - `Views/`: `SingleMigrationView`, `QueueView`, `MonitorView`, `AccountEditWindow`, `AboutWindow`.
+  - `Models/`: `FolderMappingItem`, `FolderProgressModel`, `LogEntry`.
+  - `Converters/`: `StatusColorConverter`, `InverseBooleanConverter`.
+- **`src/`**: Shared core streaming engine (.NET Standard / .NET 4.0 - .NET 8 compatible):
   - `ImapClient.cs`: RFC 3501 IMAP client with SSL/TLS, STARTTLS, EXAMINE (Read-Only), SEARCH, PEEK, APPEND, and RFC822.SIZE query.
   - `MigrationEngine.cs`: Multi-threaded queue executor, auto-retry loop, progress calculations, and size skip logic.
   - `MigrationJournal.cs`: High-speed UID and Message-ID deduplication journal.
@@ -82,7 +111,7 @@ A high-performance, resilient, modern, and portable Windows desktop application 
   - `MockImapServer.cs`: Built-in loopback IMAP server for offline self-testing and interactive demos.
   - `Settings.cs` & `SettingsDialog.cs`: Settings configuration for default hosts, default folders, retries, and size filters.
   - `AccountEditDialog.cs`: Full-featured account editor dialog matching the single mailbox layout.
-  - `MainForm.cs`: Modern, labeled UI with folder dropdown mapping and live progress.
+  - `MainForm.cs`: Portable UI with folder dropdown mapping and live progress.
   - `Controls/CustomControls.cs`: Modern animated progress bars, rounded card panels, pill badges, and flat buttons.
 
 ---
