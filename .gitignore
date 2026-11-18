@@ -1,11 +1,6 @@
 # Build & Output
 bin/
 obj/
-bin_wpf/
-publish_single/
-IMAPMigrator.WPF.exe
-**/bin/
-**/obj/
 *.rar
 .github/
 
