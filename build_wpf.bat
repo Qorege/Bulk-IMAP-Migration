@@ -15,15 +15,16 @@ if %ERRORLEVEL% NEQ 0 (
     exit /b 1
 )
 
-echo Building Release...
-dotnet publish "IMAPMigrator.WPF\IMAPMigrator.WPF.csproj" -c Release -o "bin_wpf" --nologo
+echo Publishing Standalone Single-File Release...
+dotnet publish "IMAPMigrator.WPF\IMAPMigrator.WPF.csproj" -c Release -r win-x64 --self-contained false -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -o "bin_wpf" --nologo
 
 if %ERRORLEVEL% EQU 0 (
+    copy /y "bin_wpf\IMAPMigrator.WPF.exe" "IMAPMigrator.WPF.exe" >nul
     echo.
     echo ============================================================
     echo [SUCCESS] WPF MVVM application published successfully!
+    echo Standalone executable: IMAPMigrator.WPF.exe
     echo Output directory: bin_wpf\
-    echo Executable: bin_wpf\IMAPMigrator.WPF.exe
     echo ============================================================
 ) else (
     echo.
