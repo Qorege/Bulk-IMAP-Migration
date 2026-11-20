@@ -1,0 +1,261 @@
+<UserControl x:Class="IMAPMigrator.WPF.Views.SettingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:conv="clr-namespace:IMAPMigrator.WPF.Converters"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+    <UserControl.Resources>
+        <conv:BoolToVisibilityConverter x:Key="BoolVis" />
+        <conv:EnumToBoolConverter x:Key="EnumBool" />
+    </UserControl.Resources>
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="24,16">
+        <StackPanel MaxWidth="800">
+
+            <!-- ═══ DEFAULT SERVERS ═══ -->
+            <TextBlock Text="Default Server Settings"
+                       Style="{StaticResource M3.Text.TitleMedium}"
+                       Foreground="{StaticResource M3.Brush.OnSurface}"
+                       Margin="0,0,0,12" />
+
+            <Border Style="{StaticResource M3.Card.Outlined}" Margin="0,0,0,24">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="16" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="16" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="8" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="8" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <!-- Source defaults -->
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Default Source"
+                               Style="{StaticResource M3.Text.LabelLarge}"
+                               Foreground="{StaticResource M3.Brush.OnSurfaceVariant}" />
+
+                    <StackPanel Grid.Row="2" Grid.Column="0">
+                        <TextBlock Text="Host" Style="{StaticResource M3.Text.LabelMedium}"
+                                   Foreground="{StaticResource M3.Brush.OnSurfaceVariant}" Margin="0,0,0,4" />
+                        <TextBox Style="{StaticResource M3.TextBox.Outlined}"
+                                 Text="{Binding DefaultSourceHost, UpdateSourceTrigger=PropertyChanged}" />
+                    </StackPanel>
+
+                    <StackPanel Grid.Row="4" Grid.Column="0">
+                        <TextBlock Text="Port" Style="{StaticResource M3.Text.LabelMedium}"
+                                   Foreground="{StaticResource M3.Brush.OnSurfaceVariant}" Margin="0,0,0,4" />
+                        <TextBox Style="{StaticResource M3.TextBox.Outlined}"
+                                 Text="{Binding DefaultSourcePort, UpdateSourceTrigger=PropertyChanged}" />
+                    </StackPanel>
+
+                    <StackPanel Grid.Row="6" Grid.Column="0">
+                        <TextBlock Text="Security" Style="{StaticResource M3.Text.LabelMedium}"
+                                   Foreground="{StaticResource M3.Brush.OnSurfaceVariant}" Margin="0,0,0,4" />
+                        <ComboBox Style="{StaticResource M3.ComboBox}"
+                                  SelectedItem="{Binding DefaultSourceSecurity}">
+                            <ComboBox.ItemsSource>
+                                <x:Array Type="sys:String">
+                                    <sys:String>SslTls</sys:String>
+                                    <sys:String>StartTls</sys:String>
+                                    <sys:String>Plain</sys:String>
+                                </x:Array>
+                            </ComboBox.ItemsSource>
+                        </ComboBox>
+                    </StackPanel>
+
+                    <!-- Dest defaults -->
+                    <TextBlock Grid.Row="0" Grid.Column="2" Text="Default Destination"
+                               Style="{StaticResource M3.Text.LabelLarge}"
+                               Foreground="{StaticResource M3.Brush.OnSurfaceVariant}" />
+
+                    <StackPanel Grid.Row="2" Grid.Column="2">
+                        <TextBlock Text="Host" Style="{StaticResource M3.Text.LabelMedium}"
+                                   Foreground="{StaticResource M3.Brush.OnSurfaceVariant}" Margin="0,0,0,4" />
+                        <TextBox Style="{StaticResource M3.TextBox.Outlined}"
+                                 Text="{Binding DefaultDestHost, UpdateSourceTrigger=PropertyChanged}" />
+                    </StackPanel>
+
+                    <StackPanel Grid.Row="4" Grid.Column="2">
+                        <TextBlock Text="Port" Style="{StaticResource M3.Text.LabelMedium}"
+                                   Foreground="{StaticResource M3.Brush.OnSurfaceVariant}" Margin="0,0,0,4" />
+                        <TextBox Style="{StaticResource M3.TextBox.Outlined}"
+                                 Text="{Binding DefaultDestPort, UpdateSourceTrigger=PropertyChanged}" />
+                    </StackPanel>
+
+                    <StackPanel Grid.Row="6" Grid.Column="2">
+                        <TextBlock Text="Security" Style="{StaticResource M3.Text.LabelMedium}"
+                                   Foreground="{StaticResource M3.Brush.OnSurfaceVariant}" Margin="0,0,0,4" />
+                        <ComboBox Style="{StaticResource M3.ComboBox}"
+                                  SelectedItem="{Binding DefaultDestSecurity}">
+                            <ComboBox.ItemsSource>
+                                <x:Array Type="sys:String">
+                                    <sys:String>SslTls</sys:String>
+                                    <sys:String>StartTls</sys:String>
+                                    <sys:String>Plain</sys:String>
+                                </x:Array>
+                            </ComboBox.ItemsSource>
+                        </ComboBox>
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <!-- ═══ MIGRATION OPTIONS ═══ -->
+            <TextBlock Text="Migration Options"
+                       Style="{StaticResource M3.Text.TitleMedium}"
+                       Foreground="{StaticResource M3.Brush.OnSurface}"
+                       Margin="0,0,0,12" />
+
+            <Border Style="{StaticResource M3.Card.Outlined}" Margin="0,0,0,24">
+                <StackPanel>
+                    <!-- Time period -->
+                    <TextBlock Text="Time Period" Style="{StaticResource M3.Text.LabelLarge}"
+                               Foreground="{StaticResource M3.Brush.OnSurfaceVariant}" Margin="0,0,0,8" />
+
+                    <StackPanel Margin="0,0,0,12">
+                        <RadioButton Content="All Messages" GroupName="TimePeriod" Margin="0,4"
+                                     IsChecked="{Binding TimePeriod, Converter={StaticResource EnumBool}, ConverterParameter=AllMessages}" />
+                        <RadioButton Content="Last 6 Months" GroupName="TimePeriod" Margin="0,4"
+                                     IsChecked="{Binding TimePeriod, Converter={StaticResource EnumBool}, ConverterParameter=Last6Months}" />
+                        <RadioButton Content="Last Year" GroupName="TimePeriod" Margin="0,4"
+                                     IsChecked="{Binding TimePeriod, Converter={StaticResource EnumBool}, ConverterParameter=LastYear}" />
+                        <RadioButton Content="Custom Dates" GroupName="TimePeriod" Margin="0,4"
+                                     IsChecked="{Binding TimePeriod, Converter={StaticResource EnumBool}, ConverterParameter=CustomDates}" />
+                    </StackPanel>
+
+                    <!-- Custom dates -->
+                    <Grid Margin="0,0,0,16">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="16" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Text="Start Date" Style="{StaticResource M3.Text.LabelMedium}"
+                                       Foreground="{StaticResource M3.Brush.OnSurfaceVariant}" Margin="0,0,0,4" />
+                            <DatePicker SelectedDate="{Binding CustomStartDate}" />
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="2">
+                            <TextBlock Text="End Date" Style="{StaticResource M3.Text.LabelMedium}"
+                                       Foreground="{StaticResource M3.Brush.OnSurfaceVariant}" Margin="0,0,0,4" />
+                            <DatePicker SelectedDate="{Binding CustomEndDate}" />
+                        </StackPanel>
+                    </Grid>
+
+                    <!-- Separator -->
+                    <Border Height="1" Background="{StaticResource M3.Brush.OutlineVariant}" Margin="0,0,0,16" />
+
+                    <!-- Default folders -->
+                    <StackPanel Margin="0,0,0,16">
+                        <TextBlock Text="Default Folders to Migrate" Style="{StaticResource M3.Text.LabelMedium}"
+                                   Foreground="{StaticResource M3.Brush.OnSurfaceVariant}" Margin="0,0,0,4" />
+                        <TextBox Style="{StaticResource M3.TextBox.Outlined}"
+                                 Text="{Binding DefaultFoldersToMigrate, UpdateSourceTrigger=PropertyChanged}" />
+                        <TextBlock Text="Comma-separated folder names"
+                                   Style="{StaticResource M3.Text.BodySmall}"
+                                   Foreground="{StaticResource M3.Brush.Outline}"
+                                   Margin="4,4,0,0" />
+                    </StackPanel>
+
+                    <!-- Toggles -->
+                    <CheckBox Style="{StaticResource M3.CheckBox}" Margin="0,4"
+                              Content="Direct Streaming Only"
+                              IsChecked="{Binding DirectStreamingOnly}" />
+                    <CheckBox Style="{StaticResource M3.CheckBox}" Margin="0,4"
+                              Content="Deduplicate by Message-ID"
+                              IsChecked="{Binding DeduplicateMessageId}" />
+                    <CheckBox Style="{StaticResource M3.CheckBox}" Margin="0,4"
+                              Content="Skip emails larger than limit"
+                              IsChecked="{Binding SkipLargerThanEnabled}" />
+
+                    <StackPanel Orientation="Horizontal" Margin="28,4,0,0">
+                        <TextBlock Text="Max size (MB):" Style="{StaticResource M3.Text.LabelMedium}"
+                                   Foreground="{StaticResource M3.Brush.OnSurfaceVariant}"
+                                   VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <TextBox Style="{StaticResource M3.TextBox.Outlined}" Width="80"
+                                 Text="{Binding MaxEmailSizeMB, UpdateSourceTrigger=PropertyChanged}" />
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+            <!-- ═══ QUEUE SETTINGS ═══ -->
+            <TextBlock Text="Queue &amp; Retry Settings"
+                       Style="{StaticResource M3.Text.TitleMedium}"
+                       Foreground="{StaticResource M3.Brush.OnSurface}"
+                       Margin="0,0,0,12" />
+
+            <Border Style="{StaticResource M3.Card.Outlined}" Margin="0,0,0,24">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="16" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="8" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="8" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="8" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <StackPanel Grid.Row="0" Grid.Column="0">
+                        <TextBlock Text="Concurrency" Style="{StaticResource M3.Text.LabelMedium}"
+                                   Foreground="{StaticResource M3.Brush.OnSurfaceVariant}" Margin="0,0,0,4" />
+                        <ComboBox Style="{StaticResource M3.ComboBox}"
+                                  SelectedItem="{Binding QueueConcurrency}">
+                            <ComboBox.ItemsSource>
+                                <x:Array Type="sys:String">
+                                    <sys:String>OneAtATime</sys:String>
+                                    <sys:String>ThreeAtATime</sys:String>
+                                    <sys:String>SyncAll</sys:String>
+                                </x:Array>
+                            </ComboBox.ItemsSource>
+                        </ComboBox>
+                    </StackPanel>
+
+                    <StackPanel Grid.Row="0" Grid.Column="2">
+                        <TextBlock Text="Max Retries" Style="{StaticResource M3.Text.LabelMedium}"
+                                   Foreground="{StaticResource M3.Brush.OnSurfaceVariant}" Margin="0,0,0,4" />
+                        <TextBox Style="{StaticResource M3.TextBox.Outlined}"
+                                 Text="{Binding MaxRetries, UpdateSourceTrigger=PropertyChanged}" />
+                    </StackPanel>
+
+                    <StackPanel Grid.Row="2" Grid.Column="0">
+                        <TextBlock Text="Retry Delay (seconds)" Style="{StaticResource M3.Text.LabelMedium}"
+                                   Foreground="{StaticResource M3.Brush.OnSurfaceVariant}" Margin="0,0,0,4" />
+                        <TextBox Style="{StaticResource M3.TextBox.Outlined}"
+                                 Text="{Binding RetryDelaySeconds, UpdateSourceTrigger=PropertyChanged}" />
+                    </StackPanel>
+
+                    <StackPanel Grid.Row="2" Grid.Column="2">
+                        <TextBlock Text="Timeout (seconds)" Style="{StaticResource M3.Text.LabelMedium}"
+                                   Foreground="{StaticResource M3.Brush.OnSurfaceVariant}" Margin="0,0,0,4" />
+                        <TextBox Style="{StaticResource M3.TextBox.Outlined}"
+                                 Text="{Binding TimeoutSeconds, UpdateSourceTrigger=PropertyChanged}" />
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <!-- ═══ SAVE / RESET ═══ -->
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,24">
+                <Button Content="Save Settings"
+                        Style="{StaticResource M3.Button.Filled}"
+                        Command="{Binding SaveCommand}"
+                        Margin="0,0,12,0" />
+                <Button Content="Reset to Defaults"
+                        Style="{StaticResource M3.Button.Outlined}"
+                        Command="{Binding ResetCommand}" />
+            </StackPanel>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>
