@@ -69,35 +69,13 @@ A high-performance, resilient, modern, and portable Windows desktop application 
 
 ---
 
-## 📦 Two Available Desktop Editions
-
-| Feature | 🏛️ Classic Portable Edition | ✨ Modern Material Design 3 Edition |
-| :--- | :--- | :--- |
-| **Executable** | `IMAPMigrator.exe` | `IMAPMigrator.WPF.exe` |
-| **Framework** | .NET Framework 4.0 – 4.8 | .NET 8 (Windows Desktop WPF) |
-| **Design System** | Classic Card UI with custom controls | Google Material Design 3 (M3 Semantic Tokens) |
-| **Architecture** | Lightweight WinForms | MVVM with CommunityToolkit.Mvvm |
-| **Compatibility** | Windows 7, 8, 8.1, 10, 11 (Out of the box) | Windows 10, 11 (.NET 8 runtime) |
-| **Build Script** | `build.bat` (uses standard `csc.exe`) | `build_wpf.bat` (uses `dotnet publish`) |
-| **Core Engine** | Shared direct IMAP streaming engine | Shared direct IMAP streaming engine |
-
----
-
 ## 📁 File Structure
 
-- **`IMAPMigrator.exe`**: Classic standalone portable executable (.NET Framework 4.0+).
-- **`IMAPMigrator.WPF.exe`**: Modern standalone Material Design 3 executable (.NET 8).
-- **`build.bat`**: One-click build script for the classic portable edition.
-- **`build_wpf.bat`**: One-click build and single-file publish script for the Material Design 3 WPF edition.
+- **`IMAPMigrator.exe`**: Standalone, portable executable with embedded icon (`app.ico`).
+- **`build.bat`**: One-click build script to compile the standalone portable executable using the built-in Microsoft .NET Framework compiler.
 - **`sample_accounts.csv`**: Sample CSV template ready for bulk account import.
 - **`settings.ini`**: Configuration file storing default servers, folders, concurrency, and size filters.
-- **`IMAPMigrator.WPF/`**: Complete C# WPF MVVM project designed with the Material Design 3 specification:
-  - `Themes/M3Colors.xaml`: Semantic M3 color tokens (Primary, Secondary, Surface, Outline, Error, Success, Warning).
-  - `Themes/M3Typography.xaml`: M3 typography scale (Headline, Title, Body, Label).
-  - `Themes/M3Controls.xaml`: Semantic M3 control styles (Filled, Outlined, Text, Card, ProgressBar, TabControl).
-  - `ViewModels/`: `MainViewModel`, `SingleMigrationViewModel`, `QueueViewModel`, `MonitorViewModel`, `SettingsViewModel`.
-  - `Views/`: `MainWindow`, `SingleMigrationView`, `QueueView`, `MonitorView`, `SettingsView`.
-- **`src/`**: Shared core IMAP migration engine (.cs files, zero UI dependencies):
+- **`src/`**: Complete C# source code (.NET Framework 4.0 - 4.8 compatible):
   - `ImapClient.cs`: RFC 3501 IMAP client with SSL/TLS, STARTTLS, EXAMINE (Read-Only), SEARCH, PEEK, APPEND, and RFC822.SIZE query.
   - `MigrationEngine.cs`: Multi-threaded queue executor, auto-retry loop, progress calculations, and size skip logic.
   - `MigrationJournal.cs`: High-speed UID and Message-ID deduplication journal.
