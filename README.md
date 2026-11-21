@@ -10,6 +10,16 @@ A high-performance, resilient, modern, and portable Windows desktop application 
 
 ---
 
+## 📸 Application Screenshots
+
+### Single Mailbox Migration
+![Single Mailbox Migration](screenshots/single_mailbox_migration.png)
+
+### Bulk Migration Queue
+![Bulk Migration Queue](screenshots/bulk_migration_queue.png)
+
+---
+
 ## 🚀 Key Advantages & Architecture
 
 1. **Direct IMAP-to-IMAP Streaming (Zero Disk Bloat)**:
@@ -73,6 +83,7 @@ A high-performance, resilient, modern, and portable Windows desktop application 
 
 - **`IMAPMigrator.exe`**: Standalone, portable executable with embedded icon (`app.ico`).
 - **`build.bat`**: One-click build script to compile the standalone portable executable using the built-in Microsoft .NET Framework compiler.
+- **`screenshots/`**: Application UI preview screenshots for the repository frontpage.
 - **`sample_accounts.csv`**: Sample CSV template ready for bulk account import.
 - **`settings.ini`**: Configuration file storing default servers, folders, concurrency, and size filters.
 - **`src/`**: Complete C# source code (.NET Framework 4.0 - 4.8 compatible):
